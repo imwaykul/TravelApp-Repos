@@ -9,6 +9,7 @@ import stackNav from './App';
 import styles from './App'
 import styles2 from './WelcomePage'
 import SearchableDropdown from 'react-native-searchable-dropdown';
+import {MapView, Permissions} from 'expo';
 
 items = [
 {
@@ -75,7 +76,7 @@ export default class TripSelection extends Component {
           <Text style={styles3.welcome}>
             We're excited to see that you're ready for your next excursion !
           </Text>
-          <Text style={styles3.welcome}>
+          <Text style={styles3.welcome2}>
             Please Give a Name For Your Trip!
           </Text>
           <TextInput
@@ -85,7 +86,7 @@ export default class TripSelection extends Component {
           />
           <Button
              buttonStyle = {styles3.button}
-             title="Next"
+             title="Who's Going?"
              onPress= {this.nextPage}
            />
         </View>
@@ -113,6 +114,12 @@ const styles3 = StyleSheet.create({
     textAlign: 'center',
     margin: 10,
     color: '#F5FCFF',
+  },
+  welcome2: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10,
+    color: 'deeppink',
   },
   instructions: {
     textAlign: 'center',

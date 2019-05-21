@@ -10,8 +10,9 @@ import styles from './App';
 import styles2 from './WelcomePage';
 import SearchableDropdown from 'react-native-searchable-dropdown';
 import MultiSelect from 'react-native-multiple-select';
-import {Font} from 'expo'
+import {Font, MapView, Permissions} from 'expo'
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
+
 
 // This is how you can load a local icon
 // You can remove this if you'd like
@@ -55,6 +56,8 @@ export default class TripSelection2 extends Component {
     super();
     this.state = {
       selectedItems: [],
+      buttonTxt: "Where To?",
+      clicked: 0,
     };
     this.verify = this.verify.bind(this)
   }
@@ -64,16 +67,30 @@ export default class TripSelection2 extends Component {
   };
 
   verify() {
-    if (this.state.selectedItems.length == 0) {
-        Alert.alert("Are You Sure You Want To Go By Yourself?")
+    if (this.state.clicked == 0) {
+      if (this.state.selectedItems.length == 0) {
+          Alert.alert("Solo Trip? Confirm to Continue!")
+      } else {
+          Alert.alert("Confirm So We Can Let Everyone Know!")
+      }
+      this.setState({
+        buttonTxt: "Confirm My Party!"
+      })
+      this.setState({
+        clicked: 1
+      })
     } else {
-        Alert.alert("Welcome Aboard!")
+        this.props.navigation.navigate('LocationSelection')
     }
   }
 
   render() {
     return (
       <View style= {styles4.bgtest}>
+      <Image
+      style={{width: 80, height: 80, justifyContent: 'center'}}
+      source={require('./friends_icon.png')}
+      />
         <Text>Who Do You Want To Invite?</Text>
         <SectionedMultiSelect
           items={items}
@@ -87,9 +104,9 @@ export default class TripSelection2 extends Component {
           selectedItems={this.state.selectedItems}
         />
         <Button
-           onPress = {this.verify}
-           title="Begin My Trip!"
-           color="aquamarine"
+           buttonStyle = {styles4.button}
+           title={this.state.buttonTxt}
+           onPress= {this.verify}
          />
       </View>
     );

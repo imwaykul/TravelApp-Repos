@@ -12,6 +12,7 @@ import EmailConfirmationPage from './EmailConfirmationPage';
 import ChatComp from './components/Chat';
 import MainComp from './components/Main';
 import TripSelection2 from './TripSelect2';
+import LocationSelection from './LocationSelection'
 
 const firebaseConfig = {
   apiKey: "AIzaSyAQe3hxRIsbuPpk8LEO3UeAnvAapAhGJ5w",
@@ -179,7 +180,8 @@ const stackNav = createStackNavigator({
   EmailConf: {screen: EmailConfirmationPage, title: "E Conf Page"},
   ChatPage: {screen: ChatComp, title:'Chat Page'},
   MainComp: {screen: MainComp, title:'Main Comp'},
-  TripSelect2: {screen: TripSelection2, title: "Loc"}
+  TripSelect2: {screen: TripSelection2, title: "Loc"},
+  LocationSelection: {screen: LocationSelection, title: "Location Selection"}
 
 
 },
