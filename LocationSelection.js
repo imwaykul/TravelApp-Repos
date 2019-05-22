@@ -52,19 +52,21 @@ const items = [
 ];
 
 export default class LocationSelection extends Component {
-  constructor() {
-    super();
-    this.state = {
-      selectedItems: [],
-      buttonTxt: "Create My Trip!",
-      clicked: 0,
-    };
-    this.verify = this.verify.bind(this)
+  state = {
+    latitude: null,
+    longitude: null
   }
 
-  onSelectedItemsChange = (selectedItems) => {
-    this.setState({ selectedItems });
-  };
+  async componentDidMount() {
+    const {status} = await Permissions.getAsync(Permissions.LOCATION);
+    if (status != 'granted') {
+      const response = await Permissions.askAsync(Permissions.LOCATION);
+    }
+    navigator.geolocation.getCurrentPosition(
+      ({coords: {latitude, longitude}}) => this.setState( {latitude, longitude}),
+      (error) => console.log("Error: ", error)
+    )
+  }
 
   verify() {
     if (this.state.selectedItems.length != 1) {
@@ -75,29 +77,27 @@ export default class LocationSelection extends Component {
   }
 
   render() {
+    const {latitude, longitude} = this.state
+    console.log("Latitude: ", latitude);
+    console.log("Longitude: ", longitude);
+    if (latitude) {
+      return (
+        <MapView
+        showsUserLocation
+        style = {{ flex: 1}}
+        initialRegion={{
+          latitude,
+          longitude,
+          latitudeDelta: 0.0922,
+          longitudeDelta: 0.0421
+        }}
+        >
+        </MapView>
+      );
+    }
     return (
-      <View style= {styles5.bgtest}>
-      <Image
-      style={{width: 80, height: 80, justifyContent: 'center'}}
-      source={require('./globes.png')}
-      />
-        <Text>Where Y'all Headed?</Text>
-        <SectionedMultiSelect
-          items={items}
-          uniqueKey="id"
-          subKey="children"
-          iconKey="icon"
-          selectText="Choose some things..."
-          showDropDowns={true}
-          readOnlyHeadings={true}
-          onSelectedItemsChange={this.onSelectedItemsChange}
-          selectedItems={this.state.selectedItems}
-        />
-        <Button
-           buttonStyle = {styles5.button}
-           title={this.state.buttonTxt}
-           onPress= {this.verify}
-         />
+      <View style= {{ flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+        <Text>We Need Your Permission!</Text>
       </View>
     );
   }
