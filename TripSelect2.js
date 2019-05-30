@@ -12,6 +12,7 @@ import SearchableDropdown from 'react-native-searchable-dropdown';
 import MultiSelect from 'react-native-multiple-select';
 import {Font, MapView, Permissions} from 'expo'
 import SectionedMultiSelect from 'react-native-sectioned-multi-select';
+import PropTypes from 'prop-types';
 
 
 // This is how you can load a local icon

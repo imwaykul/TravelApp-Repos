@@ -20,6 +20,7 @@ export default class WelcomePage extends Component {
     this.change2pp = this.changeToProfilePage.bind(this)
     this.moveToChat = this.moveToChat.bind(this)
     this.logOut = this.logOut.bind(this)
+    this.viewTrip = this.changeToTripView.bind(this)
   }
 
   logOut() {
@@ -45,6 +46,10 @@ export default class WelcomePage extends Component {
 
   }
 
+  changeToTripView() {
+    this.props.navigation.navigate('TripView')
+  }
+
   moveToChat() {
     this.props.navigation.navigate('ChatPage')
   }
@@ -62,6 +67,7 @@ export default class WelcomePage extends Component {
            buttonStyle = {styles.button}
            title="View My Trips"
            color="aquamarine"
+           onPress = {this.viewTrip}
          />
          <Button
             onPress = {this.tripView}

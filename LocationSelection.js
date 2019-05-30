@@ -52,52 +52,52 @@ const items = [
 ];
 
 export default class LocationSelection extends Component {
-  state = {
-    latitude: null,
-    longitude: null
+  constructor() {
+    super();
+    this.state = {
+      selectedItems: [],
+      buttonTxt: "Create My Trip!",
+      clicked: 0,
+    };
+    this.verify = this.verify.bind(this)
   }
 
-  async componentDidMount() {
-    const {status} = await Permissions.getAsync(Permissions.LOCATION);
-    if (status != 'granted') {
-      const response = await Permissions.askAsync(Permissions.LOCATION);
-    }
-    navigator.geolocation.getCurrentPosition(
-      ({coords: {latitude, longitude}}) => this.setState( {latitude, longitude}),
-      (error) => console.log("Error: ", error)
-    )
-  }
+  onSelectedItemsChange = (selectedItems) => {
+    this.setState({ selectedItems });
+  };
 
   verify() {
     if (this.state.selectedItems.length != 1) {
         Alert.alert("Please Choose One (and only one) Location!")
     } else {
-        Alert.alert("You're All Set! Start Planning!!!")
+        this.props.navigation.navigate('TripPortrait');
     }
   }
 
   render() {
-    const {latitude, longitude} = this.state
-    console.log("Latitude: ", latitude);
-    console.log("Longitude: ", longitude);
-    if (latitude) {
-      return (
-        <MapView
-        showsUserLocation
-        style = {{ flex: 1}}
-        initialRegion={{
-          latitude,
-          longitude,
-          latitudeDelta: 0.0922,
-          longitudeDelta: 0.0421
-        }}
-        >
-        </MapView>
-      );
-    }
     return (
-      <View style= {{ flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-        <Text>We Need Your Permission!</Text>
+      <View style= {styles5.bgtest}>
+      <Image
+      style={{width: 80, height: 80, justifyContent: 'center'}}
+      source={require('./globes.png')}
+      />
+        <Text>Where Y'all Headed?</Text>
+        <SectionedMultiSelect
+          items={items}
+          uniqueKey="id"
+          subKey="children"
+          iconKey="icon"
+          selectText="Choose some things..."
+          showDropDowns={true}
+          readOnlyHeadings={true}
+          onSelectedItemsChange={this.onSelectedItemsChange}
+          selectedItems={this.state.selectedItems}
+        />
+        <Button
+           buttonStyle = {styles5.button}
+           title={this.state.buttonTxt}
+           onPress= {this.verify}
+         />
       </View>
     );
   }
