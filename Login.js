@@ -16,6 +16,9 @@ export default class LoginPage extends Component {
     global.lastName = '';
     global.email = '';
     global.authenticated = 10;
+    global.tripName = '';
+    global.friendList = []; 
+    global.location = '';
     this.state = {email: '', username: '', pwd: '', firstName: '', lastName: '', confpwd: '', isLogin: false};
     this.verify = this.verify.bind(this);
     this.firebaseLogin = this.loginToFireBase.bind(this);

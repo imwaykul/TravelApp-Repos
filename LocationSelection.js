@@ -56,6 +56,7 @@ export default class LocationSelection extends Component {
     super();
     this.state = {
       selectedItems: [],
+      selectedActuals: [],
       buttonTxt: "Create My Trip!",
       clicked: 0,
     };
@@ -66,11 +67,25 @@ export default class LocationSelection extends Component {
     this.setState({ selectedItems });
   };
 
+  onSelectedItemObjectsChange = (selectedActuals) => {
+    this.setState({ selectedActuals });
+  };
+
+
+
   verify() {
     if (this.state.selectedItems.length != 1) {
         Alert.alert("Please Choose One (and only one) Location!")
     } else {
-        this.props.navigation.navigate('TripPortrait');
+
+        firebase.database().ref('trip').push({
+          isAdmin: 1,
+          location: this.state.selectedActuals[0].name,
+          status: 0,
+          tripname: global.tripName,
+          userid: firebase.auth().currentUser.uid
+        });
+        this.props.navigation.navigate('Welcome');
     }
   }
 
@@ -90,7 +105,8 @@ export default class LocationSelection extends Component {
           selectText="Choose some things..."
           showDropDowns={true}
           readOnlyHeadings={true}
-          onSelectedItemsChange={this.onSelectedItemsChange}
+          onSelectedItemsChange = {this.onSelectedItemsChange}
+          onSelectedItemObjectsChange={this.onSelectedItemObjectsChange}
           selectedItems={this.state.selectedItems}
         />
         <Button
@@ -102,7 +118,6 @@ export default class LocationSelection extends Component {
     );
   }
 }
-
 const styles5 = StyleSheet.create({
   container: {
     flex: 1,

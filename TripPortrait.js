@@ -26,9 +26,10 @@ export default class TripPortrait extends React.Component {
   }
 
   static defaultProps = {
-      tripTitle: 'Rando Trip',
-      tripLocation: 'Bangladesh',
-      tripStat: 0
+      tripTitle: 'INSERT TRIP NAME',
+      tripLocation: 'INSERT LOCATION',
+      tripStat: 1,
+      bgc: 'black'
   }
 
 

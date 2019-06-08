@@ -81,6 +81,7 @@ export default class TripSelection2 extends Component {
         clicked: 1
       })
     } else {
+        global.friendList = this.state.selectedItems
         this.props.navigation.navigate('LocationSelection')
     }
   }

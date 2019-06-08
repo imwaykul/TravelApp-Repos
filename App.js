@@ -54,7 +54,6 @@ class HomePage extends Component {
        title="Sign Up For An Account"
        color="red"
        onPress={this.signUpButton}
-
      />
      <Button
         title="Log In "

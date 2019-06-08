@@ -51,9 +51,12 @@ export default class TripSelection extends Component {
     super(props)
     this.nextPage = this.nextPage.bind(this)
     this.state = {tName: '', tLocation: '', friends: ''};
+
   }
 
   nextPage() {
+    const {tName} = this.state
+    global.tripName = tName;
     if (this.state.tName.length == 0) {
         Alert.alert("Your Trip Needs a Name!");
     } else {
