@@ -11,13 +11,14 @@ export default class LoginPage extends Component {
 
   constructor(props) {
     super(props);
+    global.selectedTrip = '';
     global.current_user = null;
     global.firstName = '';
     global.lastName = '';
     global.email = '';
     global.authenticated = 10;
     global.tripName = '';
-    global.friendList = []; 
+    global.friendList = [];
     global.location = '';
     this.state = {email: '', username: '', pwd: '', firstName: '', lastName: '', confpwd: '', isLogin: false};
     this.verify = this.verify.bind(this);

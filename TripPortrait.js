@@ -1,8 +1,8 @@
 import React, { Component} from 'react';
-import { AppRegistry, Alert, Button, Text, TextInput, StyleSheet, Dimensions, Image, View } from 'react-native';
+import { AppRegistry, Alert, Button, Text, TextInput, StyleSheet, Dimensions, Image, View, TouchableOpacity } from 'react-native';
 //import firebase from 'react-native-firebase'
 import firebase from 'firebase'
-import {createStackNavigator, createAppContainer} from 'react-navigation';
+import {createStackNavigator, withNavigation, createAppContainer} from 'react-navigation';
 import LoginPage from './Login';
 import LoadingScreen from './LoadingScreen';
 import WelcomePage from './WelcomePage';
@@ -15,14 +15,15 @@ import TripSelection2 from './TripSelect2';
 import LocationSelection from './LocationSelection';
 import ImagePicker from 'react-native-image-picker';
 import PropTypes from 'prop-types';
+import stackNav from './App';
 
-export default class TripPortrait extends React.Component {
+class TripPortrait extends Component {
 
   static propTypes = {
       tripTitle: PropTypes.string.isRequired,
       tripLocation: PropTypes.string.isRequired,
       tripStat: PropTypes.number.isRequired,
-      bgc: PropTypes.string.isRequired
+      bgc: PropTypes.string.isRequired,
   }
 
   static defaultProps = {
@@ -35,11 +36,25 @@ export default class TripPortrait extends React.Component {
 
   constructor(props) {
       super(props)
-      this.state = {tripTitle: 'Fun Times At Epcot', tripStat: "Not Started", tripLocation: 'Boring Location', statusColor: 'mistyrose', coverPhoto: 'location_default.jpg'}
+      this.state = {tripTitle: 'Fun Times At Epcot', isToggleOn: true, tripStat: "Not Started", tripLocation: 'Boring Location', statusColor: 'mistyrose', coverPhoto: 'location_default.jpg'}
       this.setTripTitle = this.setTripTitle.bind(this);
       this.setTripLocation = this.setTripLocation.bind(this);
       this.setTripStat = this.setTripStat.bind(this);
+      this.handleClick = this.handleClick.bind(this);
+      this.click = this.click.bind(this);
 
+  }
+
+  handleClick() {
+      this.setState(state => ({
+          isToggleOn: !state.isToggle
+      }))
+  }
+
+  click() {
+      Alert.alert("Beginning Navigation!");
+      global.selectedTrip = this.props.tripTitle;
+      this.props.navigation.navigate('TripHome');
   }
 
 
@@ -86,9 +101,12 @@ export default class TripPortrait extends React.Component {
     }
     return (
       <View style = {{height: 200, width: Dimensions.get('window').width, backgroundColor: bgc, alignCenter: 'center'}}>
-      <Text style = {{fontSize: 25}}>
-          {tripTitle}
-      </Text>
+      <TouchableOpacity
+         style={tripStyles.panel}
+         onPress={this.click}
+       >
+         <Text> {tripTitle} </Text>
+       </TouchableOpacity>
       <Image
         source = {require('./location_default.jpeg')}
         style = {tripStyles.circle}
@@ -105,6 +123,8 @@ export default class TripPortrait extends React.Component {
 
 }
 
+export default withNavigation(TripPortrait)
+
 const bgc = TripPortrait.props;
 
 var tripStyles = StyleSheet.create({
@@ -115,10 +135,16 @@ var tripStyles = StyleSheet.create({
     alignItems: 'center'
   },
   circle: {
-      width: 130,
-      height: 130,
-      borderRadius: 130/2,
+      width: 120,
+      height: 120,
+      borderRadius: 120/2,
       justifyContent: 'center',
       backgroundColor: 'mistyrose'
+  },
+  panel: {
+      flex: 1,
+      justifyContent: 'center',
+      color: 'black',
+      backgroundColor: 'lightgray'
   }
 });

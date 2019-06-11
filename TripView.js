@@ -1,5 +1,5 @@
 import React, { Component} from 'react';
-import { AppRegistry, Alert, Button, Text, TextInput, StyleSheet, View, Dimensions } from 'react-native';
+import { AppRegistry, Alert, ScrollView, Button, Text, TextInput, StyleSheet, View, Dimensions } from 'react-native';
 import firebase from 'firebase'
 import SignUpPage from './App'
 import {createStackNavigator, createAppContainer} from 'react-navigation';
@@ -77,7 +77,7 @@ export default class TripList extends Component {
     }
     )
     return(
-      <View style={{width: Dimensions.get('window').width, height: Dimensions.get('window').height}}>
+      <ScrollView>
         <Text style={styles.titleText}>
           {this.title}
         </Text>
@@ -89,7 +89,7 @@ export default class TripList extends Component {
           bgc={item.bgc}
           />
         ))}
-      </View>
+      </ScrollView>
     );
 }
 

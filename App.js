@@ -14,7 +14,8 @@ import MainComp from './components/Main';
 import TripSelection2 from './TripSelect2';
 import LocationSelection from './LocationSelection';
 import TripPortrait from './TripPortrait';
-import TripView from './TripView'
+import TripView from './TripView';
+import TripHome from './TripHome';
 
 const firebaseConfig = {
   apiKey: "AIzaSyAQe3hxRIsbuPpk8LEO3UeAnvAapAhGJ5w",
@@ -184,8 +185,8 @@ const stackNav = createStackNavigator({
   TripSelect2: {screen: TripSelection2, title: "Loc"},
   TripPortrait: {screen: TripPortrait, title: "Trip Portrait"},
   LocationSelection: {screen: LocationSelection, title: "Location Selection"},
-  TripView: {screen: TripView, title: 'Tripperz'}
-
+  TripView: {screen: TripView, title: 'Tripperz'},
+  TripHome: {screen: TripHome, title: 'THome'},
 
 },
 {
